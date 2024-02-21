@@ -1,0 +1,13 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Oxanium-Regular.ttf",
+      "sha1": "f516f9aaeab4219b9b8da7f3370d6794c117b329"
+    },
+    {
+      "path": "assets/fonts/Oxanium-VariableFont_wght.ttf",
+      "sha1": "6fc27eae33df34e8691f16d395a557e077882820"
+    }
+  ]
+}

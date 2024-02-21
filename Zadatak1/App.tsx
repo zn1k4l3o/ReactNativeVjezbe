@@ -18,14 +18,6 @@ import {
   View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
 /*
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -100,31 +92,13 @@ function App(): React.JSX.Element {
 }
 */
 
-type Item = {
-  id: bigint;
-  title: string;
-  body: string;
-  userId: number;
-};
-
 const styles = StyleSheet.create({
   backgroundStyle: {
-    marginTop: 32,
+    paddingTop: 32,
     paddingHorizontal: 24,
     backgroundColor: 'rgb(15, 22, 58)',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
+
 });
 
 function App(): React.JSX.Element {
@@ -160,7 +134,7 @@ function App(): React.JSX.Element {
       <ScrollView>
         <View>
           {posts.map(post => {
-            return <Post title={post.title} favourite={false} />;
+            return <Post key={post.id} title={post.title} favourite={false} />;
           })}
         </View>
       </ScrollView>
