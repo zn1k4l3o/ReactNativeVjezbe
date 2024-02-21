@@ -5,7 +5,8 @@
  * @format
  */
 
-import React from 'react';
+import Post from './components/post';
+import React, {useEffect, useState} from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -25,6 +26,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+/*
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
@@ -64,6 +66,7 @@ function App(): React.JSX.Element {
 
   return (
     <SafeAreaView style={backgroundStyle}>
+      <Post title="addd" favourite={false} />
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
@@ -95,11 +98,20 @@ function App(): React.JSX.Element {
     </SafeAreaView>
   );
 }
+*/
+
+type Item = {
+  id: bigint;
+  title: string;
+  body: string;
+  userId: number;
+};
 
 const styles = StyleSheet.create({
-  sectionContainer: {
+  backgroundStyle: {
     marginTop: 32,
     paddingHorizontal: 24,
+    backgroundColor: 'rgb(15, 22, 58)',
   },
   sectionTitle: {
     fontSize: 24,
@@ -115,4 +127,44 @@ const styles = StyleSheet.create({
   },
 });
 
+function App(): React.JSX.Element {
+  const [posts, setPosts] = useState<Item[]>([]);
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const data: Item[] = await fetch(
+          'https://jsonplaceholder.typicode.com/posts',
+        ).then(response => response.json());
+        setPosts(data);
+      } catch (error) {
+        console.error('Problem s apiem: ', error);
+      }
+    };
+    fetchItems();
+    console.log(posts);
+  }, []);
+
+  const isDarkMode = useColorScheme() === 'dark';
+  /*
+  const backgroundStyle = {
+    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  };
+  */
+
+  return (
+    <SafeAreaView style={styles.backgroundStyle}>
+      <StatusBar
+        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        backgroundColor={styles.backgroundStyle.backgroundColor}
+      />
+      <ScrollView>
+        <View>
+          {posts.map(post => {
+            return <Post title={post.title} favourite={false} />;
+          })}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
 export default App;
