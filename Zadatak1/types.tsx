@@ -1,5 +1,5 @@
 type Item = {
-  id: bigint;
+  id: number;
   title: string;
   body: string;
   userId: number;

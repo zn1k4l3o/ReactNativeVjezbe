@@ -17,7 +17,10 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-
+import {Provider, useDispatch, useSelector} from 'react-redux';
+import {useAppDispatch, useAppSelector} from './redux/hooks';
+import store from './redux/store/store';
+import PostGrid from './components/PostGrid';
 /*
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -98,47 +101,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     backgroundColor: 'rgb(15, 22, 58)',
   },
-
 });
 
 function App(): React.JSX.Element {
-  const [posts, setPosts] = useState<Item[]>([]);
-  useEffect(() => {
-    const fetchItems = async () => {
-      try {
-        const data: Item[] = await fetch(
-          'https://jsonplaceholder.typicode.com/posts',
-        ).then(response => response.json());
-        setPosts(data);
-      } catch (error) {
-        console.error('Problem s apiem: ', error);
-      }
-    };
-    fetchItems();
-    console.log(posts);
-  }, []);
-
   const isDarkMode = useColorScheme() === 'dark';
-  /*
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-  */
 
   return (
-    <SafeAreaView style={styles.backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={styles.backgroundStyle.backgroundColor}
-      />
-      <ScrollView>
-        <View>
-          {posts.map(post => {
-            return <Post key={post.id} title={post.title} favourite={false} />;
-          })}
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <Provider store={store}>
+      <SafeAreaView style={styles.backgroundStyle}>
+        <StatusBar
+          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+          backgroundColor={styles.backgroundStyle.backgroundColor}
+        />
+        <ScrollView>
+          <PostGrid />
+        </ScrollView>
+      </SafeAreaView>
+    </Provider>
   );
 }
 export default App;
