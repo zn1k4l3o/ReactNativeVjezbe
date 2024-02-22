@@ -1,26 +1,13 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import Post from './components/post';
-import React, {useEffect, useState} from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-import {Provider, useDispatch, useSelector} from 'react-redux';
-import {useAppDispatch, useAppSelector} from './redux/hooks';
+import React from 'react';
+import {StatusBar, StyleSheet, useColorScheme, View} from 'react-native';
+import {Provider} from 'react-redux';
 import store from './redux/store/store';
 import PostGrid from './components/PostGrid';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import PostPage from './components/PostPage';
+import {RootStackParamList} from './types';
+import styled from 'styled-components/native';
 /*
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -103,21 +90,28 @@ const styles = StyleSheet.create({
   },
 });
 
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
-    <Provider store={store}>
-      <SafeAreaView style={styles.backgroundStyle}>
+    <NavigationContainer>
+      <Provider store={store}>
         <StatusBar
           barStyle={isDarkMode ? 'light-content' : 'dark-content'}
           backgroundColor={styles.backgroundStyle.backgroundColor}
         />
-        <ScrollView>
-          <PostGrid />
-        </ScrollView>
-      </SafeAreaView>
-    </Provider>
+          <Stack.Navigator initialRouteName="Home">
+            <Stack.Screen name="Home" component={PostGrid} />
+            <Stack.Screen name="Post" component={PostPage} />
+          </Stack.Navigator>
+      </Provider>
+    </NavigationContainer>
   );
 }
 export default App;
+
+const StyledView = styled.View`
+  backgroundcolor: #0f163a;
+`;

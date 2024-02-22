@@ -1,11 +1,14 @@
 import {FlatList, View} from 'react-native';
 import {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
 import {useAppDispatch, useAppSelector} from '../redux/hooks';
-import Post from './post';
+import Post from './Post';
+import {HomePageProps, Item} from '../types';
 import {StyleSheet} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import styled from 'styled-components/native';
 
-function PostGrid() {
+function PostGrid({navigation}: HomePageProps) {
+  console.log('in');
   const [posts, setPosts] = useState<Item[]>([]);
   const favouritedArray = useAppSelector(
     state => state.favourite.favouritedArray,
@@ -30,27 +33,24 @@ function PostGrid() {
   }, []);
 
   return (
-    <FlatList
-      numColumns={3}
-      data={posts}
-      keyExtractor={post => post.id.toString()}
-      renderItem={({item}) => <Post title={item.title} id={item.id} />}
-    />
+    <View style={styles.scroll}>
+      <FlatList
+        numColumns={3}
+        data={posts}
+        keyExtractor={post => post.id.toString()}
+        renderItem={({item}) => <Post post={item} />}
+      />
+    </View>
   );
 }
-/*
-      {posts.map((post, index) => {
-        return <Post key={post.id} title={post.title} id={post.id} />;
-      })}
-      */
+
+const StyledView = styled.View`
+  background: #0f163a;
+`;
 
 const styles = StyleSheet.create({
-  gridRow: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    flex: 1,
-    height: 500,
+  scroll: {
+    backgroundColor: '#0f163a',
   },
 });
 
