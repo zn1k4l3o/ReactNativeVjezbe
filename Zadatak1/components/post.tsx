@@ -1,9 +1,9 @@
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Button} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faStar as starIconFull} from '@fortawesome/free-solid-svg-icons/faStar';
 import {faStar as starIconRegular} from '@fortawesome/free-regular-svg-icons/faStar';
-import { useReducer } from 'react';
+import {useReducer} from 'react';
 
 type SectionProps = {
   title: string;
@@ -13,9 +13,8 @@ type SectionProps = {
 const styles = StyleSheet.create({
   linearGradient: {
     borderRadius: 5,
-    width: '33%',
-    flex: 1,
-    //height: 200,
+    flex:1,
+    height: 150,
     margin: 1,
   },
   heading: {
@@ -24,9 +23,10 @@ const styles = StyleSheet.create({
   },
 });
 
-function Post({ title, id }: SectionProps) {
-  
-  
+function Post({title, id}: SectionProps) {
+  function changeFavourite() {
+    console.log('Pressed');
+  }
 
   return (
     <LinearGradient
@@ -35,7 +35,7 @@ function Post({ title, id }: SectionProps) {
       colors={['rgba(182,182,182,0.5)', 'rgba(255, 255, 255, 0)']}
       style={styles.linearGradient}>
       <Text style={styles.heading}>{title}</Text>
-      <FontAwesomeIcon icon={(id!=-1) ? starIconFull : starIconRegular} />
+      <Button onPress={() => changeFavourite()} title="ddd"></Button>
     </LinearGradient>
   );
 }

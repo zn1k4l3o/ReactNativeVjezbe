@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {FlatList, View} from 'react-native';
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useAppDispatch, useAppSelector} from '../redux/hooks';
@@ -30,19 +30,27 @@ function PostGrid() {
   }, []);
 
   return (
-    <View style={styles.gridRow}>
-      {posts.map((post, index) => {
-        return <Post key={post.id} title={post.title} id={index} />;
-      })}
-    </View>
+    <FlatList
+      numColumns={3}
+      data={posts}
+      keyExtractor={post => post.id.toString()}
+      renderItem={({item}) => <Post title={item.title} id={item.id} />}
+    />
   );
 }
+/*
+      {posts.map((post, index) => {
+        return <Post key={post.id} title={post.title} id={post.id} />;
+      })}
+      */
 
 const styles = StyleSheet.create({
   gridRow: {
+    display: 'flex',
     flexDirection: 'row',
+    flexWrap: 'wrap',
     flex: 1,
-    height: 200,
+    height: 500,
   },
 });
 
