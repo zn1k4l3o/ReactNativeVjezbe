@@ -102,10 +102,18 @@ function App(): React.JSX.Element {
           barStyle={isDarkMode ? 'light-content' : 'dark-content'}
           backgroundColor={styles.backgroundStyle.backgroundColor}
         />
-          <Stack.Navigator initialRouteName="Home">
-            <Stack.Screen name="Home" component={PostGrid} />
-            <Stack.Screen name="Post" component={PostPage} />
-          </Stack.Navigator>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen
+            name="Home"
+            component={PostGrid}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Post"
+            component={PostPage}
+            options={{headerShown: false}}
+          />
+        </Stack.Navigator>
       </Provider>
     </NavigationContainer>
   );

@@ -5,31 +5,47 @@ import {faStar as starIconRegular} from '@fortawesome/free-regular-svg-icons/faS
 import styled from 'styled-components/native';
 import {PostPageProps, RootStackParamList} from '../types';
 import {useNavigation} from '@react-navigation/native';
-import {
-  NativeStackNavigationProp,
-  NativeStackScreenProps,
-} from '@react-navigation/native-stack';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StyleSheet} from 'react-native';
-/*
-const StyledView = styled.ScrollView`
-  background: #0f163a;
-`;
-*/
+import {Button} from 'react-native';
 
-//type PostPageProps = NativeStackScreenProps<RootStackParamList, "Post">
+const StyledText = styled.Text`
+  font-family: 'Oxanium-Regular';
+  color: #ffffff;
+`;
+
+const WrapperView = styled.View`
+  background-color: #0f163a;
+  flex: 1;
+`;
+
+const styles = StyleSheet.create({
+  wrapper: {
+    backgroundColor: '#0f163a',
+  },
+  top: {
+    flexDirection: 'row',
+  },
+});
 
 function PostPage({route}: PostPageProps) {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const post = route.params;
   return (
-    <View>
-      <View>
-        <Text>{post.item.title}</Text>
-        <FontAwesomeIcon icon={starIconFull} />
+    <WrapperView>
+      <View style={styles.top}>
+        <StyledText>{post.item.title}</StyledText>
+        <FontAwesomeIcon icon={starIconFull} color={'#ffffff'} />
       </View>
-      <Text>{post.item.body}</Text>
-    </View>
+      <StyledText>{post.item.body}</StyledText>
+      <Button
+        onPress={() => navigation.navigate('Home')}
+        title="Nazad"
+        color="#dfdfdf"
+        accessibilityLabel="Gumb za nazad"
+      />
+    </WrapperView>
   );
 }
 

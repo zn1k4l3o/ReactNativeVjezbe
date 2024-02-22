@@ -33,25 +33,23 @@ function PostGrid({navigation}: HomePageProps) {
   }, []);
 
   return (
-    <View style={styles.scroll}>
+    <StyledView>
       <FlatList
         numColumns={3}
         data={posts}
         keyExtractor={post => post.id.toString()}
         renderItem={({item}) => <Post post={item} />}
       />
-    </View>
+    </StyledView>
   );
 }
 
 const StyledView = styled.View`
   background: #0f163a;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top:24px;
 `;
 
-const styles = StyleSheet.create({
-  scroll: {
-    backgroundColor: '#0f163a',
-  },
-});
 
 export default PostGrid;
