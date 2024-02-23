@@ -96,8 +96,8 @@ function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
-    <NavigationContainer>
-      <Provider store={store}>
+    <Provider store={store}>
+      <NavigationContainer>
         <StatusBar
           barStyle={isDarkMode ? 'light-content' : 'dark-content'}
           backgroundColor={styles.backgroundStyle.backgroundColor}
@@ -114,8 +114,8 @@ function App(): React.JSX.Element {
             options={{headerShown: false}}
           />
         </Stack.Navigator>
-      </Provider>
-    </NavigationContainer>
+      </NavigationContainer>
+    </Provider>
   );
 }
 export default App;

@@ -1,13 +1,13 @@
-import {FlatList, View} from 'react-native';
-import {useEffect, useLayoutEffect, useState} from 'react';
-import {useAppDispatch, useAppSelector} from '../redux/hooks';
+import {FlatList} from 'react-native';
+import {useEffect, useState} from 'react';
 import Post from './Post';
-import {HomePageProps, Item} from '../types';
+import {Item} from '../types';
 import styled from 'styled-components/native';
 import {useSelector} from 'react-redux';
 import {selectIsFavouritedArray} from '../redux/store/favouriteSplice';
 
 function PostGrid() {
+  const favouritedArray = useSelector(selectIsFavouritedArray);
   const [posts, setPosts] = useState<Item[]>([]);
 
   useEffect(() => {
@@ -25,15 +25,6 @@ function PostGrid() {
     fetchItems();
   }, []);
 
-  const newArray = useSelector(selectIsFavouritedArray);
-  const [favouritedArray, setFavoritedArray] = useState<number[]>(newArray);
-
-  useEffect(() => {
-    setFavoritedArray(newArray);
-    console.log('Uspilo: ' + favouritedArray);
-    console.log('novi' + newArray);
-    console.log('++');
-  }, [newArray]);
 
   return (
     <StyledView>

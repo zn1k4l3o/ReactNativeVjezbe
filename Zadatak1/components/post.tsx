@@ -1,14 +1,14 @@
-import {View, Text, StyleSheet, Button, Pressable} from 'react-native';
+import {StyleSheet, Pressable} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faStar as starIconFull} from '@fortawesome/free-solid-svg-icons/faStar';
 import {faStar as starIconRegular} from '@fortawesome/free-regular-svg-icons/faStar';
 import {RootStackParamList} from '../types';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {PostProps} from '../types';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import styled from 'styled-components/native';
-import {useAppSelector, useAppDispatch} from '../redux/hooks';
+import {useAppDispatch} from '../redux/hooks';
 import {useEffect, useState} from 'react';
 import {
   addFavourite,
@@ -48,7 +48,7 @@ function Post(props: PostProps) {
 
   const favouritedArray = useSelector(selectIsFavouritedArray);
   const [isFavourited, setFavourited] = useState(
-    favouritedArray.includes(props.post.id),
+    props.favourited,
   );
   const dispatch = useAppDispatch();
 
@@ -57,7 +57,6 @@ function Post(props: PostProps) {
     else dispatch(removeFavourite(props.post.id));
     setFavourited(!isFavourited);
   }
-  //console.log(isFavourited);
 
   useEffect(() => {
     if (isFavourited) console.log('truee');
@@ -65,6 +64,10 @@ function Post(props: PostProps) {
   function switchToPostPage() {
     navigation.navigate('Post', {item: props.post});
   }
+
+  useFocusEffect(() => {
+    setFavourited(favouritedArray.includes(props.post.id));
+  });
 
   return (
     <StyledPressable onPress={switchToPostPage}>
