@@ -11,7 +11,7 @@ export type RootStackParamList = {
 
  Home: undefined;
  
- Post: { item: Item };
+ Post: { item: Item};
 
 };
 
@@ -27,4 +27,5 @@ export type PostPageProps = NativeStackScreenProps<
 
 export type PostProps = {
   post: Item;
+  favourited: boolean;
 };

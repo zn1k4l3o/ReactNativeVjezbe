@@ -15,9 +15,11 @@ export const favouriteSlice = createSlice({
   reducers: {
     addFavourite: (state, action: PayloadAction<number>) => {
       state.favouritedArray.push(action.payload);
+      console.log(state.favouritedArray);
     },
     removeFavourite: (state, action: PayloadAction<number>) => {
       state.favouritedArray.splice(action.payload, action.payload);
+      console.log(state.favouritedArray);
     },
   },
 });

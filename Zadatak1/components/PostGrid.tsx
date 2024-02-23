@@ -3,20 +3,9 @@ import {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../redux/hooks';
 import Post from './Post';
 import {HomePageProps, Item} from '../types';
-import {StyleSheet} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import styled from 'styled-components/native';
 
 function PostGrid({navigation}: HomePageProps) {
-  console.log('in');
-  const [posts, setPosts] = useState<Item[]>([]);
-  const favouritedArray = useAppSelector(
-    state => state.favourite.favouritedArray,
-  );
-  const dispatch = useAppDispatch();
-  //const dispatch = useDispatch();
-  //TODO implementirat na klik zvjezdice
-
   useEffect(() => {
     const fetchItems = async () => {
       try {
@@ -29,8 +18,21 @@ function PostGrid({navigation}: HomePageProps) {
       }
     };
     fetchItems();
-    console.log(posts);
   }, []);
+  //const [postFavouritedState, setPostFavouritedState] = useState<boolean[]>([]);
+  const [posts, setPosts] = useState<Item[]>([]);
+  const favouritedArray = useAppSelector(
+    state => state.favourite.favouritedArray,
+  );
+
+  console.log(favouritedArray);
+
+  /*
+  let postFavouritedState = [] as boolean[];
+  posts.forEach(post => {
+    postFavouritedState.push(favouritedArray.includes(post.id));
+  });
+  */
 
   return (
     <StyledView>
@@ -38,7 +40,12 @@ function PostGrid({navigation}: HomePageProps) {
         numColumns={3}
         data={posts}
         keyExtractor={post => post.id.toString()}
-        renderItem={({item}) => <Post post={item} />}
+        renderItem={({item}) => (
+          <Post
+            post={item}
+            favourited={favouritedArray.includes(item.id)}
+          />
+        )}
       />
     </StyledView>
   );
@@ -46,10 +53,9 @@ function PostGrid({navigation}: HomePageProps) {
 
 const StyledView = styled.View`
   background: #0f163a;
-  padding-left: 8px;
-  padding-right: 8px;
-  padding-top:24px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 24px;
 `;
-
 
 export default PostGrid;

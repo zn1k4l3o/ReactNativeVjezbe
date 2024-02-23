@@ -8,6 +8,9 @@ import {useNavigation} from '@react-navigation/native';
 import {PostProps} from '../types';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import styled from 'styled-components/native';
+import {useAppSelector, useAppDispatch} from '../redux/hooks';
+import {useState} from 'react';
+import {addFavourite, removeFavourite} from '../redux/store/favouriteSplice';
 
 const styles = StyleSheet.create({
   gradient: {
@@ -25,7 +28,7 @@ const styles = StyleSheet.create({
 const StyledPressable = styled.Pressable`
   flex: 1;
   height: 110px;
-  margin: 0px 8px 48px 8px;
+  margin: 0px 4px 48px 4px;
 `;
 
 const Heading = styled.Text`
@@ -37,9 +40,20 @@ const Heading = styled.Text`
 function Post(props: PostProps) {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
+  const [isFavourited, setFavourited] = useState(props.favourited);
+  const dispatch = useAppDispatch();
+  console.log(props.favourited);
+  const favouritedArray = useAppSelector(
+    state => state.favourite.favouritedArray,
+  );
+  /*
+  setFavourited(favouritedArray.includes(props.post.id));
+  console.log(favouritedArray);
+*/
   function changeFavourite() {
-    console.log('Pressed');
+    if (isFavourited === false) dispatch(addFavourite(props.post.id));
+    else dispatch(removeFavourite(props.post.id));
+    setFavourited(!isFavourited);
   }
 
   function switchToPostPage() {
@@ -55,7 +69,9 @@ function Post(props: PostProps) {
         style={styles.gradient}>
         <Heading>{props.post.title}</Heading>
         <Pressable style={styles.star} onPress={changeFavourite}>
-          <FontAwesomeIcon icon={starIconFull} />
+          <FontAwesomeIcon
+            icon={isFavourited ? starIconFull : starIconRegular}
+          />
         </Pressable>
       </LinearGradient>
     </StyledPressable>
