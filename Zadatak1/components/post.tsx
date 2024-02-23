@@ -9,8 +9,13 @@ import {PostProps} from '../types';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import styled from 'styled-components/native';
 import {useAppSelector, useAppDispatch} from '../redux/hooks';
-import {useState} from 'react';
-import {addFavourite, removeFavourite} from '../redux/store/favouriteSplice';
+import {useEffect, useState} from 'react';
+import {
+  addFavourite,
+  removeFavourite,
+  selectIsFavouritedArray,
+} from '../redux/store/favouriteSplice';
+import {useSelector} from 'react-redux';
 
 const styles = StyleSheet.create({
   gradient: {
@@ -40,22 +45,23 @@ const Heading = styled.Text`
 function Post(props: PostProps) {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const [isFavourited, setFavourited] = useState(props.favourited);
-  const dispatch = useAppDispatch();
-  console.log(props.favourited);
-  const favouritedArray = useAppSelector(
-    state => state.favourite.favouritedArray,
+
+  const favouritedArray = useSelector(selectIsFavouritedArray);
+  const [isFavourited, setFavourited] = useState(
+    favouritedArray.includes(props.post.id),
   );
-  /*
-  setFavourited(favouritedArray.includes(props.post.id));
-  console.log(favouritedArray);
-*/
+  const dispatch = useAppDispatch();
+
   function changeFavourite() {
     if (isFavourited === false) dispatch(addFavourite(props.post.id));
     else dispatch(removeFavourite(props.post.id));
     setFavourited(!isFavourited);
   }
+  //console.log(isFavourited);
 
+  useEffect(() => {
+    if (isFavourited) console.log('truee');
+  }, [isFavourited]);
   function switchToPostPage() {
     navigation.navigate('Post', {item: props.post});
   }

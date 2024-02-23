@@ -1,11 +1,15 @@
 import {FlatList, View} from 'react-native';
-import {useEffect, useState} from 'react';
+import {useEffect, useLayoutEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../redux/hooks';
 import Post from './Post';
 import {HomePageProps, Item} from '../types';
 import styled from 'styled-components/native';
+import {useSelector} from 'react-redux';
+import {selectIsFavouritedArray} from '../redux/store/favouriteSplice';
 
-function PostGrid({navigation}: HomePageProps) {
+function PostGrid() {
+  const [posts, setPosts] = useState<Item[]>([]);
+
   useEffect(() => {
     const fetchItems = async () => {
       try {
@@ -13,26 +17,23 @@ function PostGrid({navigation}: HomePageProps) {
           'https://jsonplaceholder.typicode.com/posts',
         ).then(response => response.json());
         setPosts(data);
+        console.log(data);
       } catch (error) {
         console.error('Problem s apiem: ', error);
       }
     };
     fetchItems();
   }, []);
-  //const [postFavouritedState, setPostFavouritedState] = useState<boolean[]>([]);
-  const [posts, setPosts] = useState<Item[]>([]);
-  const favouritedArray = useAppSelector(
-    state => state.favourite.favouritedArray,
-  );
 
-  console.log(favouritedArray);
+  const newArray = useSelector(selectIsFavouritedArray);
+  const [favouritedArray, setFavoritedArray] = useState<number[]>(newArray);
 
-  /*
-  let postFavouritedState = [] as boolean[];
-  posts.forEach(post => {
-    postFavouritedState.push(favouritedArray.includes(post.id));
-  });
-  */
+  useEffect(() => {
+    setFavoritedArray(newArray);
+    console.log('Uspilo: ' + favouritedArray);
+    console.log('novi' + newArray);
+    console.log('++');
+  }, [newArray]);
 
   return (
     <StyledView>
@@ -41,10 +42,7 @@ function PostGrid({navigation}: HomePageProps) {
         data={posts}
         keyExtractor={post => post.id.toString()}
         renderItem={({item}) => (
-          <Post
-            post={item}
-            favourited={favouritedArray.includes(item.id)}
-          />
+          <Post post={item} favourited={favouritedArray.includes(item.id)} />
         )}
       />
     </StyledView>

@@ -7,7 +7,7 @@ import {PostPageProps, RootStackParamList} from '../types';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {Button} from 'react-native';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {addFavourite, removeFavourite} from '../redux/store/favouriteSplice';
 import {useAppDispatch, useAppSelector} from '../redux/hooks';
 
@@ -30,7 +30,9 @@ function PostPage({route}: PostPageProps) {
     else dispatch(removeFavourite(post.item.id));
     setFavourited(!isFavourited);
   }
-
+  useEffect(() => {
+    console.log('Uspilo: ' + favouritedArray);
+  }, [favouritedArray]);
   return (
     <WrapperView>
       <TopView>
