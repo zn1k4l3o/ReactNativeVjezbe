@@ -17,7 +17,6 @@ function PostGrid() {
           'https://jsonplaceholder.typicode.com/posts',
         ).then(response => response.json());
         setPosts(data);
-        console.log(data);
       } catch (error) {
         console.error('Problem s apiem: ', error);
       }

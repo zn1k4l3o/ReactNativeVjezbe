@@ -1,4 +1,4 @@
-import {StyleSheet, Pressable} from 'react-native';
+import {StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faStar as starIconFull} from '@fortawesome/free-solid-svg-icons/faStar';
@@ -9,45 +9,13 @@ import {PostProps} from '../types';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import styled from 'styled-components/native';
 import {useAppDispatch} from '../redux/hooks';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {
   addFavourite,
   removeFavourite,
   selectIsFavouritedArray,
 } from '../redux/store/favouriteSplice';
 import {useSelector} from 'react-redux';
-
-const styles = StyleSheet.create({
-  gradient: {
-    flex: 1,
-    borderRadius: 16,
-    padding: 8,
-    flexDirection: 'row',
-  },
-  star: {
-    color: '#ffffff',
-    flex: 1,
-  },
-});
-
-const StyledPressable = styled.Pressable`
-  flex: 1;
-  height: 110px;
-  margin: 0px 4px 48px 4px;
-`;
-
-const Heading = styled.Text`
-  color: #ffffff;
-  font-family: 'Oxanium-Regular';
-  flex: 3;
-`;
-
-const Star = styled.Pressable`
-  height:12px;
-  width:12px;
-  color:#ffffff;
-  margin-right:8px;
-`;
 
 function Post(props: PostProps) {
   const navigation =
@@ -63,9 +31,6 @@ function Post(props: PostProps) {
     setFavourited(!isFavourited);
   }
 
-  useEffect(() => {
-    if (isFavourited) console.log('truee');
-  }, [isFavourited]);
   function switchToPostPage() {
     navigation.navigate('Post', {item: props.post});
   }
@@ -85,12 +50,40 @@ function Post(props: PostProps) {
         <Star onPress={changeFavourite}>
           <FontAwesomeIcon
             icon={isFavourited ? starIconFull : starIconRegular}
-            color={'#ffffff'}
+            style={{color:"#ffffff"}}
           />
         </Star>
       </LinearGradient>
     </StyledPressable>
   );
 }
+
+const styles = StyleSheet.create({
+  gradient: {
+    flex: 1,
+    borderRadius: 16,
+    padding: 8,
+    flexDirection: 'row',
+  },
+});
+
+const StyledPressable = styled.Pressable`
+  flex: 1;
+  height: 110px;
+  margin: 0px 4px 48px 4px;
+`;
+
+const Heading = styled.Text`
+  color: #ffffff;
+  font-family: 'Oxanium-Regular';
+  flex: 3;
+`;
+
+const Star = styled.Pressable`
+  height: 12px;
+  width: 12px;
+  margin-right: 8px;
+  margin-left: 8px;
+`;
 
 export default Post;

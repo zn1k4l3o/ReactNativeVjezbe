@@ -15,12 +15,10 @@ export const favouriteSlice = createSlice({
   reducers: {
     addFavourite: (state, action: PayloadAction<number>) => {
       state.favouritedArray.push(action.payload);
-      console.log('Dodano: ' + state.favouritedArray);
     },
     removeFavourite: (state, action: PayloadAction<number>) => {
       const index = state.favouritedArray.indexOf(action.payload);
       state.favouritedArray.splice(index, 1);
-      console.log('Maknuto: ' + state.favouritedArray);
     },
   },
   selectors: {
