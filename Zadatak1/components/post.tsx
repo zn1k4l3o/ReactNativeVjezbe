@@ -42,14 +42,19 @@ const Heading = styled.Text`
   flex: 3;
 `;
 
+const Star = styled.Pressable`
+  height:12px;
+  width:12px;
+  color:#ffffff;
+  margin-right:8px;
+`;
+
 function Post(props: PostProps) {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const favouritedArray = useSelector(selectIsFavouritedArray);
-  const [isFavourited, setFavourited] = useState(
-    props.favourited,
-  );
+  const [isFavourited, setFavourited] = useState(props.favourited);
   const dispatch = useAppDispatch();
 
   function changeFavourite() {
@@ -77,11 +82,12 @@ function Post(props: PostProps) {
         colors={['rgba(182,182,182,0.5)', 'rgba(255, 255, 255, 0)']}
         style={styles.gradient}>
         <Heading>{props.post.title}</Heading>
-        <Pressable style={styles.star} onPress={changeFavourite}>
+        <Star onPress={changeFavourite}>
           <FontAwesomeIcon
             icon={isFavourited ? starIconFull : starIconRegular}
+            color={'#ffffff'}
           />
-        </Pressable>
+        </Star>
       </LinearGradient>
     </StyledPressable>
   );

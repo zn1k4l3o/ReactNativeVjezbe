@@ -1,12 +1,12 @@
-import {Pressable, Text, View} from 'react-native';
+import {Pressable} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faStar as starIconFull} from '@fortawesome/free-solid-svg-icons/faStar';
 import {faStar as starIconRegular} from '@fortawesome/free-regular-svg-icons/faStar';
+import {faArrowLeft} from '@fortawesome/free-solid-svg-icons/faArrowLeft';
 import styled from 'styled-components/native';
 import {PostPageProps, RootStackParamList} from '../types';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {Button} from 'react-native';
 import {useEffect, useState} from 'react';
 import {addFavourite, removeFavourite} from '../redux/store/favouriteSplice';
 import {useAppDispatch, useAppSelector} from '../redux/hooks';
@@ -35,6 +35,11 @@ function PostPage({route}: PostPageProps) {
   }, [favouritedArray]);
   return (
     <WrapperView>
+      <Pressable
+        onPress={() => navigation.navigate('Home')}
+        accessibilityLabel="Gumb za nazad">
+        <FontAwesomeIcon icon={faArrowLeft} color={'#ffffff'} size={32} />
+      </Pressable>
       <TopView>
         <Heading>{post.item.title}</Heading>
         <Pressable onPress={changeFavourite} style={{flex: 1}}>
@@ -45,12 +50,6 @@ function PostPage({route}: PostPageProps) {
         </Pressable>
       </TopView>
       <StyledText>{post.item.body}</StyledText>
-      <Button
-        onPress={() => navigation.navigate('Home')}
-        title="Nazad"
-        color="#dfdfdf"
-        accessibilityLabel="Gumb za nazad"
-      />
     </WrapperView>
   );
 }
