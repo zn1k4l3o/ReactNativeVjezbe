@@ -35,14 +35,14 @@ function PostPage({route}: PostPageProps) {
   }, [favouritedArray]);
   return (
     <WrapperView>
-      <Pressable
+      <BackArrow
         onPress={() => navigation.navigate('Home')}
         accessibilityLabel="Gumb za nazad">
         <FontAwesomeIcon icon={faArrowLeft} color={'#ffffff'} size={32} />
-      </Pressable>
+      </BackArrow>
       <TopView>
         <Heading>{post.item.title}</Heading>
-        <Pressable onPress={changeFavourite} style={{flex: 1}}>
+        <Pressable onPress={changeFavourite} style={{flex: 1, padding:2}}>
           <FontAwesomeIcon
             icon={isFavourited ? starIconFull : starIconRegular}
             color={'#ffffff'}
@@ -53,6 +53,12 @@ function PostPage({route}: PostPageProps) {
     </WrapperView>
   );
 }
+
+const BackArrow = styled.Pressable`
+  width: auto;
+  padding: 2px;
+  margin-right: auto;
+`;
 
 const Heading = styled.Text`
   font-family: 'Oxanium-Regular';
@@ -66,6 +72,7 @@ const StyledText = styled.Text`
   color: #ffffff;
   font-size: 14px;
   margin-top: 16px;
+  line-height: 18;
 `;
 
 const WrapperView = styled.View`
