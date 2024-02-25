@@ -16,9 +16,7 @@ import {
   selectIsFavouritedArray,
 } from '../redux/store/favouriteSplice';
 import {useSelector} from 'react-redux';
-import {Dimensions} from 'react-native';
 
-const maxPostWidth = (Dimensions.get('window').width - 4 * 2 * 3 - 10) / 3;
 function Post(props: PostProps) {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -42,7 +40,9 @@ function Post(props: PostProps) {
   });
 
   return (
-    <StyledPressable onPress={switchToPostPage}>
+    <StyledPressable
+      onPress={switchToPostPage}
+      style={{width: props.postWidth}}>
       <LinearGradient
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}
@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
 
 const StyledPressable = styled.Pressable`
   height: 110px;
-  width: ${maxPostWidth}px;
   margin: 0px 4px 48px 4px;
 `;
 

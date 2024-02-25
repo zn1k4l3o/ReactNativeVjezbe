@@ -28,4 +28,5 @@ export type PostPageProps = NativeStackScreenProps<
 export type PostProps = {
   post: Item;
   favourited: boolean;
+  postWidth: number;
 };

@@ -18,7 +18,6 @@ function PostPage({route}: PostPageProps) {
     state => state.favourite.favouritedArray,
   );
   const post = route.params;
-  console.log('Id: ' + post.item.id);
 
   const [isFavourited, setFavourited] = useState(
     favouritedArray.includes(post.item.id),
@@ -30,9 +29,7 @@ function PostPage({route}: PostPageProps) {
     else dispatch(removeFavourite(post.item.id));
     setFavourited(!isFavourited);
   }
-  useEffect(() => {
-    console.log('Uspilo: ' + favouritedArray);
-  }, [favouritedArray]);
+
   return (
     <WrapperView>
       <BackArrow
@@ -42,7 +39,7 @@ function PostPage({route}: PostPageProps) {
       </BackArrow>
       <TopView>
         <Heading>{post.item.title}</Heading>
-        <Pressable onPress={changeFavourite} style={{flex: 1, padding:2}}>
+        <Pressable onPress={changeFavourite} style={{flex: 1, padding: 2}}>
           <FontAwesomeIcon
             icon={isFavourited ? starIconFull : starIconRegular}
             color={'#ffffff'}
@@ -72,7 +69,7 @@ const StyledText = styled.Text`
   color: #ffffff;
   font-size: 14px;
   margin-top: 16px;
-  line-height: 18;
+  line-height: 18px;
 `;
 
 const WrapperView = styled.View`
