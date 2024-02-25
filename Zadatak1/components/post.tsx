@@ -16,7 +16,9 @@ import {
   selectIsFavouritedArray,
 } from '../redux/store/favouriteSplice';
 import {useSelector} from 'react-redux';
+import {Dimensions} from 'react-native';
 
+const maxPostWidth = (Dimensions.get('window').width - 4 * 2 * 3 - 10) / 3;
 function Post(props: PostProps) {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -50,7 +52,7 @@ function Post(props: PostProps) {
         <Star onPress={changeFavourite}>
           <FontAwesomeIcon
             icon={isFavourited ? starIconFull : starIconRegular}
-            style={{color:"#ffffff"}}
+            style={{color: '#ffffff'}}
           />
         </Star>
       </LinearGradient>
@@ -68,8 +70,8 @@ const styles = StyleSheet.create({
 });
 
 const StyledPressable = styled.Pressable`
-  flex: 1;
   height: 110px;
+  width: ${maxPostWidth}px;
   margin: 0px 4px 48px 4px;
 `;
 
