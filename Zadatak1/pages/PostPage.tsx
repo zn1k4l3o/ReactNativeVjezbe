@@ -7,10 +7,13 @@ import styled from 'styled-components/native';
 import {PostPageProps, RootStackParamList} from '../types';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {addFavourite, removeFavourite} from '../redux/store/favouriteSplice';
 import {useAppDispatch, useAppSelector} from '../redux/hooks';
 
+/*
+Stranica za pojedinu objavu s title i body.
+*/
 function PostPage({route}: PostPageProps) {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();

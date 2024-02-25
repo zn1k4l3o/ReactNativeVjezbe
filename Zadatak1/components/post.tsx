@@ -8,20 +8,21 @@ import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {PostProps} from '../types';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import styled from 'styled-components/native';
-import {useAppDispatch} from '../redux/hooks';
+import {useAppDispatch, useAppSelector} from '../redux/hooks';
 import {useState} from 'react';
-import {
-  addFavourite,
-  removeFavourite,
-  selectIsFavouritedArray,
-} from '../redux/store/favouriteSplice';
-import {useSelector} from 'react-redux';
+import {addFavourite, removeFavourite} from '../redux/store/favouriteSplice';
+
+/*
+Pojedina objava
+*/
 
 function Post(props: PostProps) {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-  const favouritedArray = useSelector(selectIsFavouritedArray);
+  const favouritedArray = useAppSelector(
+    state => state.favourite.favouritedArray,
+  );
   const [isFavourited, setFavourited] = useState(props.favourited);
   const dispatch = useAppDispatch();
 

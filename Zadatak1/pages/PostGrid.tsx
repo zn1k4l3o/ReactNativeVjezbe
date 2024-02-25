@@ -1,15 +1,19 @@
 import {Dimensions, FlatList} from 'react-native';
 import {useEffect, useState} from 'react';
-import Post from './Post';
+import Post from '../components/Post';
 import {Item} from '../types';
 import styled from 'styled-components/native';
-import {useSelector} from 'react-redux';
-import {selectIsFavouritedArray} from '../redux/store/favouriteSplice';
+import {useAppSelector} from '../redux/hooks';
 
 const maxPostWidth = (Dimensions.get('window').width - 4 * 2 * 3 - 10) / 3;
 
+/*
+Wrapper komponenta koja sadrži Post
+*/
 function PostGrid() {
-  const favouritedArray = useSelector(selectIsFavouritedArray);
+  const favouritedArray = useAppSelector(
+    state => state.favourite.favouritedArray,
+  );
   const [posts, setPosts] = useState<Item[]>([]);
 
   useEffect(() => {
@@ -26,7 +30,6 @@ function PostGrid() {
     fetchItems();
   }, []);
 
-
   return (
     <StyledView>
       <FlatList
@@ -34,7 +37,11 @@ function PostGrid() {
         data={posts}
         keyExtractor={post => post.id.toString()}
         renderItem={({item}) => (
-          <Post post={item} favourited={favouritedArray.includes(item.id)} postWidth={maxPostWidth}/>
+          <Post
+            post={item}
+            favourited={favouritedArray.includes(item.id)}
+            postWidth={maxPostWidth}
+          />
         )}
       />
     </StyledView>
