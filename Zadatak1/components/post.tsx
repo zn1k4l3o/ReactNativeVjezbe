@@ -64,20 +64,22 @@ function Post(props: PostProps) {
 const styles = StyleSheet.create({
   gradient: {
     flex: 1,
-    borderRadius: 16,
+    borderRadius: 24,
     padding: 8,
     flexDirection: 'row',
   },
 });
 
 const StyledPressable = styled.Pressable`
-  height: 110px;
+  height: 120px;
   margin: 0px 4px 48px 4px;
 `;
 
 const Heading = styled.Text`
   color: #ffffff;
   font-family: 'Oxanium-Regular';
+  margin-top:24px;
+  margin-left:16px;
   flex: 3;
 `;
 

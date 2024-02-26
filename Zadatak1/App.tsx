@@ -1,5 +1,5 @@
 import React from 'react';
-import {StatusBar, StyleSheet, useColorScheme, View} from 'react-native';
+import {StatusBar} from 'react-native';
 import {Provider} from 'react-redux';
 import store from './redux/store/store';
 import PostGrid from './pages/PostGrid';
@@ -8,25 +8,15 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import PostPage from './pages/PostPage';
 import {RootStackParamList} from './types';
 
-const styles = StyleSheet.create({
-  backgroundStyle: {
-    paddingTop: 32,
-    paddingHorizontal: 24,
-    backgroundColor: 'rgb(15, 22, 58)',
-  },
-});
-
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
   return (
     <Provider store={store}>
       <NavigationContainer>
         <StatusBar
-          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-          backgroundColor={styles.backgroundStyle.backgroundColor}
+          barStyle={'light-content'}
+          backgroundColor={'rgb(15, 22, 58)'}
         />
         <Stack.Navigator initialRouteName="Home">
           <Stack.Screen
